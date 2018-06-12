@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+		<!-- Vue.js development version -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<!-- Vue.js production version -->
+		<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+		<link rel="stylesheet" href="styles.min.css" type="text/css" />
+
+		<title>Where's Wally?</title>
+	</head>
+	<body>
+		<div id="vm">
+			<header>
+				<div class="ico-char ico-wally" :class="[currentData.found.wally ? 'ico-found' : '']"></div>
+				<div class="ico-char ico-woof" :class="[currentData.found.woof ? 'ico-found' : '']"></div>
+				<div class="ico-char ico-whitebeard" :class="[currentData.found.whitebeard ? 'ico-found' : '']"></div>
+				<div class="ico-char ico-wenda" :class="[currentData.found.wenda ? 'ico-found' : '']"></div>
+				<div class="ico-char ico-odlaw" :class="[currentData.found.odlaw ? 'ico-found' : '']"></div>
+				<!-- <div class="ico-menu"><i class="fas fa-bars"></i></div> -->
+			</header>
+			<main>
+				<div class="game-board" :class="currentData.class">
+					<img src="images/wheres-wally.jpg" alt="Wheres Wally?">
+					<div class="wally" @click="find('wally')"></div>
+					<div class="woof" @click="find('woof')"></div>
+					<div class="whitebeard" @click="find('whitebeard')"></div>
+					<div class="wenda" @click="find('wenda')"></div>
+					<div class="odlaw" @click="find('odlaw')"></div>
+				</div>
+			</main>
+		</div>
+		<script type="text/javascript" src="scripts.min.js"></script>
+	</body>
+</html>

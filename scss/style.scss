@@ -1,0 +1,164 @@
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+html {
+	box-sizing: border-box;
+}
+body {
+	margin: 0;
+	font-family: arial;
+}
+
+h2 {
+	margin: 0;
+	padding: 0 14px;
+	line-height: 56px;
+}
+
+header {
+	background: #228ac8;
+	color: #fff;
+	height: 55px;
+	overflow: hidden;
+	padding: 0 2px;
+
+	.ico-char {
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		background: #e4e4e4;
+		float: left;
+		margin: 10px 8px;
+
+		&.ico-found {
+			background: rebeccapurple;
+		}
+	}
+	.ico-menu {
+		float: right;
+		padding: 10px;
+		margin-right: 2px;
+		font-size: 35px;
+		line-height: 35px;
+		cursor: pointer;
+	}
+}
+main {
+	overflow: scroll;
+	height: calc(100vh - 56px);
+
+	.game-board {
+		position: relative;
+		width: 2000px;
+	}
+
+	img {
+		width: 2000px;
+		float: left;
+	}
+}
+
+.wally,
+.whitebeard,
+.wenda,
+.odlaw,
+.woof {
+	position: absolute;
+}
+
+.lvl-01 {
+	.wally {
+		width: 60px;
+		height: 86px;
+		top: 458px;
+		right: 17px;
+	}
+	.whitebeard {
+		width: 60px;
+		height: 66px;
+		top: 588px;
+		left: 227px;
+	}
+	.wenda {
+		width: 60px;
+		height: 62px;
+		top: 956px;
+		left: 20px;
+	}
+	.odlaw {
+		width: 60px;
+		height: 62px;
+		top: 712px;
+		left: 464px;
+	}
+	.woof {
+		width: 60px;
+		height: 62px;
+		top: 814px;
+		right: 308px;
+	}
+}
+.lvl-02 {
+	.wally {
+		width: 60px;
+		height: 86px;
+		top: 458px;
+		right: 17px;
+	}
+	.whitebeard {
+		width: 60px;
+		height: 66px;
+		top: 588px;
+		left: 227px;
+	}
+	.wenda {
+		width: 60px;
+		height: 62px;
+		top: 956px;
+		left: 20px;
+	}
+	.odlaw {
+		width: 60px;
+		height: 62px;
+		top: 712px;
+		left: 464px;
+	}
+	.woof {
+		width: 60px;
+		height: 62px;
+		top: 814px;
+		right: 308px;
+	}
+}
+.lvl-03 {
+	.wally {
+		width: 60px;
+		height: 86px;
+		top: 458px;
+		right: 17px;
+	}
+	.whitebeard {
+		width: 60px;
+		height: 66px;
+		top: 588px;
+		left: 227px;
+	}
+	.wenda {
+		width: 60px;
+		height: 62px;
+		top: 956px;
+		left: 20px;
+	}
+	.odlaw {
+		width: 60px;
+		height: 62px;
+		top: 712px;
+		left: 464px;
+	}
+	.woof {
+		width: 60px;
+		height: 62px;
+		top: 814px;
+		right: 308px;
+	}
+}
