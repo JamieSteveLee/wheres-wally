@@ -1,3 +1,6 @@
+$wally-blue: #228ac8;
+$wally-red: #eb2b28;
+
 *, *:before, *:after {
 	box-sizing: inherit;
 }
@@ -15,37 +18,62 @@ h2 {
 	line-height: 56px;
 }
 
+.preload {
+	display: none;
+}
+
 header {
-	background: #228ac8;
+	background: $wally-blue;
 	color: #fff;
-	height: 55px;
+	height: 54px;
 	overflow: hidden;
-	padding: 0 2px;
+	padding: 0 2px 0 4px;
 
-	.ico-char {
-		width: 35px;
-		height: 35px;
-		border-radius: 50%;
-		background: #e4e4e4;
-		float: left;
-		margin: 10px 8px;
-
-		&.ico-found {
-			background: rebeccapurple;
-		}
-	}
 	.ico-menu {
 		float: right;
-		padding: 10px;
-		margin-right: 2px;
-		font-size: 35px;
-		line-height: 35px;
+		padding: 9px 10px 7px 8px;
+		font-size: 33px;
 		cursor: pointer;
 	}
+	.fa-times {
+		padding: 0 4px;
+	}
 }
+.ico-char {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	float: left;
+	margin: 7px 5px;
+	background: url(images/characters.png);
+	background-size: 618%;
+	border: 2px solid #F1B733;
+	filter: grayscale(1) brightness(0.5);
+
+	&.ico-wally {
+		background-position: 2% 0;
+	}
+	&.ico-woof {
+		background-position: 53% 0;
+	}
+	&.ico-whitebeard {
+		background-position: 76% 12%;
+	}
+	&.ico-wenda {
+		background-position: 26% 0;
+	}
+	&.ico-odlaw {
+		background-position: 99% 0;
+	}
+
+	&.ico-found {
+		filter: grayscale(0);
+	}
+}
+
 main {
 	overflow: scroll;
-	height: calc(100vh - 56px);
+	height: calc(100vh - 54px);
 
 	.game-board {
 		position: relative;
@@ -57,108 +85,327 @@ main {
 		float: left;
 	}
 }
+.menu {
+	background: #228ac8;
+	position: fixed;
+	top: 0;
+	left: 100%;
+	width: 100vw;
+	height: 100vh;
+	transition: left .3s;
+
+	&.menu-open {
+		left: 0;
+		cursor: pointer;
+	}
+	.lvl-row {
+		float: left;
+		width: calc(100% - 16px);
+		padding: 6px 13px 6px 10px;
+		line-height: 34px;
+		font-size: 18px;
+		background: #fff;
+		margin: 4px 8px;
+		color: #444;
+
+		@media (min-width: 576px) {
+			width: calc(50% - 16px);
+		}
+		@media (min-width: 992px) {
+			width: calc((100% / 3) - 16px);
+		}
+
+		.menu-found-set,
+		.menu-lvl-name {
+			float: left;
+		}
+		.menu-found-set {
+			margin-left: 15px;
+		}
+
+		.ico-char {
+			width: 30px;
+			height: 30px;
+			float: right;
+			margin: 2px -3px;
+		}
+
+		&.row-lvl-locked {
+			background: #ccc;
+		}
+
+		.lvl-select,
+		.lvl-locked {
+			float: right;
+			font-size: 14px;
+			padding: 6px;
+			width: 34px;
+			height: 34px;
+			text-align: center;
+			border-radius: 5px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			color: #fff;
+		}
+		.lvl-select {
+			background: $wally-red;
+		}
+		.lvl-locked {
+			background: #999;
+		}
+	}
+}
+.modal {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: none;
+
+	&.modal-open {
+		display: block;
+	}
+
+	.modal-bkgd {
+		position: absolute;
+		opacity: .8;
+		background: #000;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
+	.modal-content {
+		width: 90vw;
+		max-width: 550px;
+		position: absolute;
+		left: 50%;
+		top: 40%;
+		transform: translate(-50%, -50%);
+		color: #fff;
+		text-align: center;
+	}
+	.ico-char {
+		width: 100px;
+		height: 100px;
+		border-width: 3px;
+		margin: 0 auto;
+		float: none;
+	}
+	.keep-looking {
+		background: $wally-blue;
+	}
+	.next-lvl {
+		background: $wally-red;
+	}
+	.keep-looking,
+	.next-lvl {
+		display: block;
+		width: fit-content;
+		padding: 6px 12px;
+		border-radius: 4px;
+		margin: 14px auto;
+		font-size: 18px;
+		border: 1px solid #fff;
+		cursor: pointer;
+	}
+}
+.found-message {
+	position: fixed;
+	bottom: -62px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #444;
+	color: #fff;
+	padding: 20px;
+	width: 90vw;
+	height: 62px;
+	text-align: center;
+	font-size: 18px;
+	border-radius: 10px 10px 0 0;
+	transition: bottom .5s;
+
+	&.show-found-message {
+		bottom: 0;
+	}
+	.found-char-name {
+		text-transform: capitalize;
+	}
+}
 
 .wally,
+.woof,
 .whitebeard,
 .wenda,
 .odlaw,
-.woof {
+.extra {
 	position: absolute;
+}
+
+.extra {
+	display: none;
 }
 
 .lvl-01 {
 	.wally {
-		width: 60px;
-		height: 86px;
-		top: 458px;
-		right: 17px;
-	}
-	.whitebeard {
-		width: 60px;
-		height: 66px;
-		top: 588px;
-		left: 227px;
-	}
-	.wenda {
-		width: 60px;
-		height: 62px;
-		top: 956px;
-		left: 20px;
-	}
-	.odlaw {
-		width: 60px;
-		height: 62px;
-		top: 712px;
-		left: 464px;
+		width: 30px;
+		height: 49px;
+		top: 475px;
+		left: 961px;
 	}
 	.woof {
-		width: 60px;
-		height: 62px;
-		top: 814px;
-		right: 308px;
+		width: 27px;
+		height: 39px;
+		top: 610px;
+		left: 1772px;
+	}
+	.whitebeard {
+		width: 49px;
+		height: 93px;
+		top: 84px;
+		left: 649px;
+	}
+	.wenda {
+		width: 30px;
+		height: 32px;
+		top: 444px;
+		left: 21px;
+	}
+	.odlaw {
+		width: 47px;
+		height: 61px;
+		top: 700px;
+		left: 672px;
 	}
 }
 .lvl-02 {
 	.wally {
-		width: 60px;
-		height: 86px;
-		top: 458px;
-		right: 17px;
-	}
-	.whitebeard {
-		width: 60px;
-		height: 66px;
-		top: 588px;
-		left: 227px;
-	}
-	.wenda {
-		width: 60px;
-		height: 62px;
-		top: 956px;
-		left: 20px;
-	}
-	.odlaw {
-		width: 60px;
-		height: 62px;
-		top: 712px;
-		left: 464px;
+		width: 55px;
+		height: 85px;
+		top: 419px;
+		left: 1222px;
 	}
 	.woof {
-		width: 60px;
+		width: 27px;
+		height: 26px;
+		top: 425px;
+		left: 1361px;
+	}
+	.whitebeard {
+		width: 50px;
+		height: 68px;
+		top: 385px;
+		left: 518px;
+	}
+	.wenda {
+		width: 38px;
+		height: 42px;
+		top: 463px;
+		left: 1545px;
+	}
+	.odlaw {
+		width: 27px;
 		height: 62px;
-		top: 814px;
-		right: 308px;
+		top: 396px;
+		left: 188px;
 	}
 }
 .lvl-03 {
 	.wally {
-		width: 60px;
-		height: 86px;
-		top: 458px;
-		right: 17px;
-	}
-	.whitebeard {
-		width: 60px;
-		height: 66px;
-		top: 588px;
-		left: 227px;
-	}
-	.wenda {
-		width: 60px;
-		height: 62px;
-		top: 956px;
-		left: 20px;
-	}
-	.odlaw {
-		width: 60px;
-		height: 62px;
-		top: 712px;
-		left: 464px;
+		width: 73px;
+		height: 71px;
+		top: 397px;
+		left: 1426px;
 	}
 	.woof {
-		width: 60px;
-		height: 62px;
-		top: 814px;
-		right: 308px;
+		width: 32px;
+		height: 22px;
+		top: 867px;
+		left: 1005px;
+	}
+	.whitebeard {
+		width: 29px;
+		height: 60px;
+		top: 434px;
+		left: 682px;
+	}
+	.wenda {
+		width: 37px;
+		height: 56px;
+		top: 818px;
+		left: 580px;
+	}
+	.odlaw {
+		width: 33px;
+		height: 56px;
+		top: 839px;
+		left: 379px;
+	}
+}
+.lvl-04 {
+	.wally {
+		width: 45px;
+		height: 69px;
+		top: 952px;
+		left: 1720px;
+	}
+	.woof {
+		width: 39px;
+		height: 22px;
+		top: 1157px;
+		left: 1272px;
+	}
+	.whitebeard {
+		width: 49px;
+		height: 63px;
+		top: 861px;
+		left: 1187px;
+	}
+	.wenda {
+		width: 28px;
+		height: 37px;
+		top: 865px;
+		left: 1055px;
+	}
+	.odlaw {
+		width: 31px;
+		height: 56px;
+		top: 908px;
+		left: 713px;
+	}
+}
+.lvl-05 {
+	.wally {
+		width: 52px;
+		height: 76px;
+		top: 205px;
+		left: 823px;
+	}
+	.woof {
+		width: 25px;
+		height: 14px;
+		top: 626px;
+		left: 1225px;
+	}
+	.whitebeard {
+		width: 58px;
+		height: 56px;
+		top: 28px;
+		left: 1361px;
+	}
+	.wenda {
+		width: 29px;
+		height: 82px;
+		top: 902px;
+		left: 583px;
+	}
+	.odlaw {
+		width: 36px;
+		height: 72px;
+		top: 891px;
+		left: 375px;
 	}
 }

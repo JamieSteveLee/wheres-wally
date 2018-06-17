@@ -16,24 +16,62 @@
 	</head>
 	<body>
 		<div id="vm">
+			<div class="preload">
+				<img v-bind:src="lvl.imgSrc" v-for="lvl in levelData">
+			</div>
 			<header>
 				<div class="ico-char ico-wally" :class="[currentData.found.wally ? 'ico-found' : '']"></div>
 				<div class="ico-char ico-woof" :class="[currentData.found.woof ? 'ico-found' : '']"></div>
 				<div class="ico-char ico-whitebeard" :class="[currentData.found.whitebeard ? 'ico-found' : '']"></div>
 				<div class="ico-char ico-wenda" :class="[currentData.found.wenda ? 'ico-found' : '']"></div>
 				<div class="ico-char ico-odlaw" :class="[currentData.found.odlaw ? 'ico-found' : '']"></div>
-				<!-- <div class="ico-menu"><i class="fas fa-bars"></i></div> -->
+				<div class="ico-menu" @click="displayMenu(true)"><i class="fas fa-bars"></i></div>
 			</header>
 			<main>
 				<div class="game-board" :class="currentData.class">
-					<img src="images/wheres-wally.jpg" alt="Wheres Wally?">
+					<img :src="currentData.imgSrc" alt="Wheres Wally?">
 					<div class="wally" @click="find('wally')"></div>
 					<div class="woof" @click="find('woof')"></div>
 					<div class="whitebeard" @click="find('whitebeard')"></div>
 					<div class="wenda" @click="find('wenda')"></div>
 					<div class="odlaw" @click="find('odlaw')"></div>
+					<div class="extra" @click="find('extra')"></div>
 				</div>
 			</main>
+			<div class="menu" :class="[showMenu ? 'menu-open' : '']">
+				<header>
+					<div class="ico-menu" @click="displayMenu(false)"><i class="fas fa-times"></i></div>
+				</header>
+				<div class="lvl-row" v-for="(lvl, index) in levelData" :class="[lvl.unlocked ? '' : 'row-lvl-locked']" @click="selectLevel(index)">
+					<div class="menu-lvl-name">
+						{{lvl.name}}
+					</div>
+
+					<div class="menu-found-set">
+						<div class="ico-char ico-odlaw" :class="[lvl.found.odlaw ? 'ico-found' : '']"></div>
+						<div class="ico-char ico-wenda" :class="[lvl.found.wenda ? 'ico-found' : '']"></div>
+						<div class="ico-char ico-whitebeard" :class="[lvl.found.whitebeard ? 'ico-found' : '']"></div>
+						<div class="ico-char ico-woof" :class="[lvl.found.woof ? 'ico-found' : '']"></div>
+						<div class="ico-char ico-wally" :class="[lvl.found.wally ? 'ico-found' : '']"></div>
+					</div>
+
+					<div class="lvl-select" v-if="lvl.unlocked"><i class="fas fa-arrow-right"></i></div>
+					<div class="lvl-locked" v-else><i class="fas fa-lock"></i></div>
+				</div>
+			</div>
+			<div class="modal" :class="[showModal ? 'modal-open' : '']">
+				<div class="modal-bkgd" @click="displayModal(false)"></div>
+				<div class="modal-content">
+					<h2>You found Wally!</h2>
+					<div class="ico-char ico-wally ico-found"></div>
+					<div class="keep-looking" @click="displayModal(false)">Keep looking</div>
+					<div class="next-lvl" v-if="!lastLevel" @click="goToNextLvl()">Next level</div>
+					<div v-else class="well-done">You found Wally on evey level! Well Done!</div>
+				</div>
+			</div>
+			<div class="found-message" :class="[showFoundMsg ? 'show-found-message' : '']">
+				You found <span class="found-char-name">{{latestFound}}</span>!
+			</div>
 		</div>
 		<script type="text/javascript" src="scripts.min.js"></script>
 	</body>
