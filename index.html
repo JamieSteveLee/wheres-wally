@@ -61,7 +61,18 @@
 			</div>
 			<div class="modal" :class="[showModal ? 'modal-open' : '']">
 				<div class="modal-bkgd" @click="displayModal(false)"></div>
-				<div class="modal-content">
+				<div class="modal-content" v-if="allFound">
+					<h2>You found Wally and his friends!</h2>
+					<div class="menu-found-set">
+						<div class="ico-char ico-wally ico-found"></div>
+						<div class="ico-char ico-woof ico-found"></div>
+						<div class="ico-char ico-whitebeard ico-found"></div>
+						<div class="ico-char ico-wenda ico-found"></div>
+						<div class="ico-char ico-odlaw ico-found"></div>
+					</div>
+					<div class="next-lvl" v-if="!lastLevel" @click="goToNextLvl()">Next level</div>
+				</div>
+				<div class="modal-content" v-else>
 					<h2>You found Wally!</h2>
 					<div class="ico-char ico-wally ico-found"></div>
 					<div class="keep-looking" @click="displayModal(false)">Keep looking</div>

@@ -12,12 +12,6 @@ body {
 	font-family: arial;
 }
 
-h2 {
-	margin: 0;
-	padding: 0 14px;
-	line-height: 56px;
-}
-
 .preload {
 	display: none;
 }
@@ -169,6 +163,11 @@ main {
 		display: block;
 	}
 
+	h2 {
+		margin: 0;
+		padding: 0 14px;
+	}
+
 	.modal-bkgd {
 		position: absolute;
 		opacity: .8;
@@ -183,7 +182,7 @@ main {
 		max-width: 550px;
 		position: absolute;
 		left: 50%;
-		top: 40%;
+		top: 46%;
 		transform: translate(-50%, -50%);
 		color: #fff;
 		text-align: center;
@@ -192,8 +191,18 @@ main {
 		width: 100px;
 		height: 100px;
 		border-width: 3px;
-		margin: 0 auto;
+		margin: 20px auto 30px;
 		float: none;
+	}
+	.menu-found-set {
+		margin: 20px 0 30px;
+
+		.ico-char {
+			width: 70px;
+			height: 70px;
+			margin: 0 4px;
+			display: inline-block;
+		}
 	}
 	.keep-looking {
 		background: $wally-blue;
@@ -207,7 +216,7 @@ main {
 		width: fit-content;
 		padding: 6px 12px;
 		border-radius: 4px;
-		margin: 14px auto;
+		margin: 20px auto;
 		font-size: 18px;
 		border: 1px solid #fff;
 		cursor: pointer;
@@ -232,7 +241,11 @@ main {
 		bottom: 0;
 	}
 	.found-char-name {
-		text-transform: capitalize;
+		display: inline-block;
+		
+		&::first-letter {
+			text-transform: capitalize;
+		}
 	}
 }
 

@@ -5,7 +5,7 @@ var vm = new Vue({
 		showMenu: false,
 		showModal: false,
 		showFoundMsg: false,
-		latestFound: 'Wally',
+		latestFound: 'wally again',
 		levelData: [
 			{
 				class: 'lvl-01',
@@ -23,7 +23,7 @@ var vm = new Vue({
 			{
 				class: 'lvl-02',
 				name: 'Level 2',
-				unlocked: true,
+				unlocked: false,
 				imgSrc: 'images/lvl-02.jpg',
 				found: {
 					wally: false,
@@ -36,7 +36,7 @@ var vm = new Vue({
 			{
 				class: 'lvl-03',
 				name: 'Level 3',
-				unlocked: true,
+				unlocked: false,
 				imgSrc: 'images/lvl-03.jpg',
 				found: {
 					wally: false,
@@ -49,7 +49,7 @@ var vm = new Vue({
 			{
 				class: 'lvl-04',
 				name: 'Level 4',
-				unlocked: true,
+				unlocked: false,
 				imgSrc: 'images/lvl-04.jpg',
 				found: {
 					wally: false,
@@ -62,7 +62,7 @@ var vm = new Vue({
 			{
 				class: 'lvl-05',
 				name: 'Level 5',
-				unlocked: true,
+				unlocked: false,
 				imgSrc: 'images/lvl-05.jpg',
 				found: {
 					wally: false,
@@ -85,21 +85,38 @@ var vm = new Vue({
 				return false;
 			}
 		},
+		allFound: function() {
+			var foundAll = true;
+			for(var char in this.currentData.found) {
+				if(!this.currentData.found[char]) {
+					foundAll = false;
+					break;
+				}
+			}
+			return foundAll;
+		},
 		nxtLvl: function() {
 			return this.currentLevel + 1;
 		}
 	},
 	methods: {
 		find: function(name) {
-			if(name == 'wally' && !this.levelData[this.currentLevel].found[name]) {
-				this.displayModal(true);
-				if(!this.lastLevel) {
-					this.levelData[this.nxtLvl].unlocked = true;
-				}
+			var alreadyFound = this.levelData[this.currentLevel].found[name];
+
+			if (alreadyFound) {
+				this.displayFoundMsg(name + ' again');
 			} else {
-				this.displayFoundMsg(name);
+				this.levelData[this.currentLevel].found[name] = true;
+				if(this.allFound || name == 'wally') {
+					this.displayModal(true);
+					if(!this.lastLevel) {
+						this.levelData[this.nxtLvl].unlocked = true;
+					}
+				} else {
+					this.displayFoundMsg(name);
+				}
 			}
-			this.levelData[this.currentLevel].found[name] = true;
+			this.saveGame();
 			// switch(name) {
 			// 	case "wally":
 			// 		alert("Oooh look you gone and found Wally didn't ya");
@@ -142,11 +159,41 @@ var vm = new Vue({
 				this.currentLevel = thisLevel;
 				this.displayMenu(false);
 				this.displayModal(false);
+				this.saveGame();
 			}
 		},
 		goToNextLvl: function() {
 			this.selectLevel(this.nxtLvl);
+		},
+		saveGame: function() {
+			var saveLevelData = JSON.stringify(this.levelData);
+			localStorage.setItem('jamie_wally', saveLevelData);
+			localStorage.setItem('jamie_wally_lvl', this.currentLevel);
+		},
+		loadGame: function() {
+			var loadLevelData = JSON.parse(localStorage.getItem('jamie_wally'));
+			var loadCurrentLvl = JSON.parse(localStorage.getItem('jamie_wally_lvl'));
+			if(loadLevelData) {
+				var dataLength = loadLevelData.length;
+				this.levelData.splice(0, dataLength);
+				for (var i = 0; i < dataLength; i++) {
+					this.levelData.unshift(loadLevelData.pop());
+				}
+			}
+			if(loadCurrentLvl) {
+				this.currentLevel = loadCurrentLvl;
+			}
+		},
+		resetGame: function() {
+			var confirmReset = confirm('Are you sure you want to reset your game?');
+			if(confirmReset) {
+				localStorage.removeItem('jamie_wally');
+				localStorage.removeItem('jamie_wally_lvl');
+				location.reload();
+			}
 		}
 	},
-	beforeMount() {}
+	beforeMount() {
+		this.loadGame();
+	}
 });
